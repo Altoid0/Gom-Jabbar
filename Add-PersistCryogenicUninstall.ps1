@@ -1,0 +1,1 @@
+# https://papers.vx-underground.org/papers/VXUG/Exclusive/PersistenceSeries/2/Cryogenically%20Frozen%20Malware.pdf
