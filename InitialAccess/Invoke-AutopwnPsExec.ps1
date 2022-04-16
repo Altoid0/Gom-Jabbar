@@ -17,8 +17,8 @@ function Invoke-AutopwnPsExec {
             [ValidateNotNullOrEmpty()]
             [string]$SvcName = "PSEXESVC"
             
-        )
-    write-host $Hosts
+            )
+
     $PsExecExist = Test-Path -Path .\PsExec64.exe
     if (!$PsExecExist) {
         Write-Host "PsExcec 64-bit missing"
