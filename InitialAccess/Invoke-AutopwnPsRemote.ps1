@@ -23,6 +23,6 @@ function Invoke-AutopwnPsRemote {
         $Credential = New-Object System.Management.Automation.PSCredential ("$Username", $CredentialPass)
     }
     
-    Invoke-Command $Hosts -ScriptBlock {$Payload} -Credential $Credential
+    Invoke-Command $Hosts -Credential $Credential -ScriptBlock {$Payload}
     
 }
