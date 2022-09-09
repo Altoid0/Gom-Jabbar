@@ -8,7 +8,7 @@ function Add-PersistScheduledTask {
     [string]$Trigger,
 
     [Parameter(Mandatory=$false)]
-    [string]$Name = "Microsoft Media Player Cache",
+    [string]$Name = "Microsoft Media Player Cache", # TODO: See if can randomize name either like metasploit or from preset array
 
     [Parameter(Mandatory)]
     [string]$Payload

@@ -3,7 +3,7 @@ function Add-PersistNetshDLL {
     [CmdletBinding()]
             Param(
             [Parameter(Mandatory)]
-            [string]$Path, # Check if you can use a network path for this
+            [string]$Path, # TODO: Check if you can use a network path for this
 
             [Parameter(Mandatory=$false)]
             [string]$Name = "NetshHelper",
