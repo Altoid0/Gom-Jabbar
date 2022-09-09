@@ -1,5 +1,15 @@
 function Add-PersistRDP {
-    Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp' -name "UserAuthentication" -Value 0 -Force
+    
+    [CmdletBinding()]
+            Param(
+            [Parameter(Mandatory=$false)]
+            [bool]$DisableNLA = $false
+        )
+    
+    if ($DisableNLA) {
+        Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp' -name "UserAuthentication" -Value 0 -Force
+    }
+    
     Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server'-name "fDenyTSConnections" -Value 0 -Force
     
     if (Get-NetFirewallRule -DisplayGroup "Remote Desktop") {

