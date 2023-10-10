@@ -70,8 +70,6 @@ Listeners {
             ]
         }
     }
-
-    # Smb {} # TODO is this a thing?
 }
 
 Demon {
