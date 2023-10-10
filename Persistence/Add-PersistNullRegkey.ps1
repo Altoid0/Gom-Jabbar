@@ -3,7 +3,7 @@ function Add-PersistNullRegkey{
     .SYNOPSIS
     This script adds a "fileless backdoor" in a similar manner seen by the Poweliks malware. 
     Author: Jonathan Echavarria (@Und3rf10w)
-    Adapted By: Altoid0, Twitter: @Altoid0day
+    Author: Altoid0, Twitter: @Altoid0day
     .DESCRIPTION
     Original script: https://github.com/Und3rf10w/Aggressor-scripts/blob/master/kits/PersistKit/scripts/Persist-Poweliks.ps1
     This function creates a registry key with the name of "<nullbyte><CRLF>", that contains an entry named "<nullbyte><CRLF>"
@@ -12,7 +12,7 @@ function Add-PersistNullRegkey{
     .EXAMPLE
     PS C:\> Add-PersistNullRegkey -Payload <web drive-by/ps beacon/ps command>
     .NOTES
-    Remove the "powershell.exe" at the start as it is already added by the script
+    Remove the "powershell.exe" at the start if your payload as it is already added by the script
     #>
     
         [CmdletBinding()]
