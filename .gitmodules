@@ -1,0 +1,3 @@
+[submodule "InitialAccess/Dovetail"]
+	path = InitialAccess/Dovetail
+	url = https://github.com/Altoid0/Dovetail.git
